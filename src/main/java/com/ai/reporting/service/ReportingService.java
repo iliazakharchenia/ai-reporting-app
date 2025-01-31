@@ -27,7 +27,14 @@ public class ReportingService {
                 .subscribeOn(Schedulers.boundedElastic());
     }
 
-    // requests from multiple threads work well only on a paid accounts :(((
+    /**
+     * Requests from multiple threads. Works only on a paid accounts :(((
+     * <p>
+     * Typical error message: '429 - {"message":"Requests rate limit exceeded"}'
+     *
+     * @exception org.springframework.ai.retry.NonTransientAiException
+     * When requests rate is too big from your app.
+     */
     public Mono<ReportResponse> reportMultiple(MultipleDatasourceReportData reportData) {
         return Flux.merge(
                 reportData.dataList().parallelStream()
@@ -87,7 +94,7 @@ public class ReportingService {
         return client.prompt(shorterPrompt(reportPrompt(reportData)).toString()).call().content();
     }
 
-    public static StringBuilder reportPrompt(ReportData reportData) {
+    private static StringBuilder reportPrompt(ReportData reportData) {
         return new StringBuilder("Make a report with respect of '")
                 .append(reportData.objective())
                 .append("' objective, according to the material '")
@@ -95,7 +102,7 @@ public class ReportingService {
                 .append("'.");
     }
 
-    public static StringBuilder shorterPrompt(StringBuilder promptBuilder) {
+    private static StringBuilder shorterPrompt(StringBuilder promptBuilder) {
         return promptBuilder.append(" Make response as shorter as possible.");
     }
 }

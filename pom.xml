@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.ai</groupId>
 	<artifactId>reporting</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-demo</version>
 	<name>ai-reporting-app</name>
 	<description>Project that helps in business reports according to the text datasets using the AI LLM.</description>
 	<url/>
