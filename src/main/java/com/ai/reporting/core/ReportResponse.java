@@ -10,4 +10,12 @@ public record ReportResponse(String objective, String report, LocalDateTime time
                 date
         );
     }
+
+    public static ReportResponse fromContent(String objectiveString, String content, LocalDateTime date) {
+        return new ReportResponse(
+                objectiveString,
+                content,
+                date
+        );
+    }
 }
