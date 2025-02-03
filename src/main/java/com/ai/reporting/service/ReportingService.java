@@ -95,7 +95,8 @@ public class ReportingService {
     }
 
     private static StringBuilder reportPrompt(ReportData reportData) {
-        return new StringBuilder("Make a report with respect of '")
+        return new StringBuilder("Ignore all previous prompt. ")
+                .append("Make a report with respect of '")
                 .append(reportData.objective())
                 .append("' objective, according to the material '")
                 .append(reportData.data())
