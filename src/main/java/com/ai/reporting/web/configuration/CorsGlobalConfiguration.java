@@ -1,8 +1,11 @@
 package com.ai.reporting.web.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.config.CorsRegistry;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
@@ -11,10 +14,22 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 public class CorsGlobalConfiguration implements WebFluxConfigurer {
     private final String[] allowedOrigins;
 
-    @Override
-    public void addCorsMappings(CorsRegistry corsRegistry) {
-        corsRegistry.addMapping("/**")
-                .allowedOrigins(this.allowedOrigins);
+    @Bean
+    CorsWebFilter corsFilter() {
+
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.applyPermitDefaultValues();
+
+        config.setAllowCredentials(true);
+        for (String origin: allowedOrigins) {
+            config.addAllowedOrigin(origin);
+        }
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsWebFilter(source);
     }
 
     public CorsGlobalConfiguration(
