@@ -21,15 +21,13 @@ public class CorsGlobalConfiguration implements WebFluxConfigurer {
 
         CorsConfiguration config = new CorsConfiguration();
 
-//        for (String origin: allowedOrigins) {
-//            config.addAllowedOrigin(origin);
-//        }
+        for (String origin: allowedOrigins) {
+            config.addAllowedOrigin(origin);
+        }
 
-//        config.addAllowedMethod("*");
-//        config.addAllowedHeader("*");
-//        config.setAllowCredentials(true);
-//        config.addAllowedOrigin("*");
-        config.applyPermitDefaultValues();
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
