@@ -21,7 +21,6 @@ public class CorsGlobalConfiguration implements WebFluxConfigurer {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowCredentials(true);
 //        for (String origin: allowedOrigins) {
 //            config.addAllowedOrigin(origin);
 //        }
