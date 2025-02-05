@@ -9,6 +9,8 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebFlux
 public class CorsGlobalConfiguration implements WebFluxConfigurer {
@@ -19,12 +21,14 @@ public class CorsGlobalConfiguration implements WebFluxConfigurer {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        config.applyPermitDefaultValues();
-
         config.setAllowCredentials(true);
         for (String origin: allowedOrigins) {
             config.addAllowedOrigin(origin);
         }
+
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
